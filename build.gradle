@@ -1,0 +1,76 @@
+buildscript {
+	ext {
+		springBootVersion = '1.3.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+group= 'io.cfp'
+version = '1.0.0-SNAPSHOT'
+description = 'Auth module for cfp.io'
+
+jar {
+	baseName = 'auth'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+    // Spring boot
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-devtools'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude module: 'tomcat-jdbc'
+    }
+
+    // Spring Boot - AutoConfig
+    compile 'com.zaxxer:HikariCP:2.4.6'
+    compile 'org.liquibase:liquibase-core'
+    runtime 'mysql:mysql-connector-java'
+
+    // Mail
+    compile 'org.springframework.boot:spring-boot-starter-mail'
+    compile 'org.apache.velocity:velocity'
+    compile 'com.sendgrid:sendgrid-java:2.2.2'
+
+    // OAuth
+    compile 'com.github.scribejava:scribejava-apis:2.5.3'
+
+    // Utils
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'commons-io:commons-io:2.5'
+    compile 'de.svenkubiak:jBCrypt:0.4.1'
+    compile 'ma.glasnost.orika:orika-core:1.4.6'
+
+    // Token
+    compile 'io.jsonwebtoken:jjwt:0.6.0'
+
+    // WebJars
+    runtime 'org.webjars:bootstrap:3.3.6'
+    runtime 'org.webjars:bootstrap-social:5.0.0'
+
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
